@@ -11,13 +11,13 @@ public class TreadingTest {
             System.out.println("target should be bigger than initial_founding");
         }
         for (int d =1;initial_funding < target;d++) {
-            double profitOfDay = (d%7==0 ||d%6==0) ?
+            double profitOfDay = (d % 7 == 0 || d % 6 == 0) ?
                     initial_funding * profit_margin_for_weekend:
                     initial_funding * profit_margin_for_weekday;
             initial_funding += (int) profitOfDay * lever;
             day = d;
             final_funding = initial_funding;
-            System.out.println("Day:" + day+"   profit -> " +(int)profitOfDay+ "   All: " + final_funding);
+            System.out.println("Day:" + day+"   profit -> " +(int)profitOfDay * lever+ "   All: " + final_funding);
         }
         return (int)final_funding;
     }
