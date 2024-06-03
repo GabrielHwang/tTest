@@ -21,7 +21,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 
     // This dependency is used by the application.
-    // implementation("com.google.guava:guava:31.1-jre")
+     implementation("com.google.guava:guava:31.1-jre")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -33,15 +34,36 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("ttest/TreadingTest")
+    mainClass.set("ttest/Main")
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
-tasks.register("treading_clean") {
-    doLast {
-        println("this is a treading_clean test")
+//TODO
+abstract class WriteLog : DefaultTask() {
+    @TaskAction
+    fun action() {
+        val file = File("InfoLog.txt")
+        file.createNewFile()
+        
+        file.writeText("HELLO FROM MY TASK")
     }
 }
+
+tasks.register<WriteLog>("createFileTask") {
+ 
+    group = "information"
+    
+    
+}
+
+tasks.register<JavaExec>("runInfo") {
+    group = "information"
+    description = "run calculateInfo function in Main class"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("ttest.Main")
+    args("400","4000","10")
+}
+

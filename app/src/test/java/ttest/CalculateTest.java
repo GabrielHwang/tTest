@@ -2,7 +2,6 @@ package ttest;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,4 +23,11 @@ public class CalculateTest {
         double totalFee = calculate.getTotalFee(400, 4000, 10);
         assertEquals(59.972400000000015, totalFee);
     }
+    @Test
+    public void getTotalProfit(){
+        Calculate calculate =new Calculate();
+        double totalFee = calculate.getTotalProfit(400, 4000, 10);
+        assertEquals(4394.5276, totalFee);
+    }
+//
 }

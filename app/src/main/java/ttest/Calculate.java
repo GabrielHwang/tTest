@@ -34,9 +34,9 @@ public class Calculate {
             final_funding = initial_funding;
             totalFee += feeOfDay;
             totalProfit += profitOfDay - feeOfDay;
-            System.out.println("Day:" + day + "   profit -> " + String.format("%.2f", profitOfDay)
-                    + "   fee:   " + String.format("%.2f", feeOfDay)
-                    + "   All: " + final_funding);
+           System.out.println("Day:" + day + "   profit -> " + String.format("%.2f", profitOfDay)
+                   + "   fee:   " + String.format("%.2f", feeOfDay)
+                   + "   All: " + final_funding);
         }
         result.add((double) day);
         result.add(totalProfit);
@@ -59,5 +59,17 @@ public class Calculate {
         List<Double> info = calculateInfo(initial_funding, target_funding, lever);
         return info.get(2);
     }
-
+    /**
+     * get total days from initial to target with lever
+     * */
+    public double getDays(int initial_funding, int target_funding, int lever) {
+        List<Double> info = calculateInfo(initial_funding, target_funding, lever);
+        return info.get(0);
+    }
+    public double MaxLoss(int initial_funding, int target_funding, int lever) {
+        //TODO
+        double max_loss_per=0.02;
+        double max_loss = 8.0;
+        return max_loss;
+    }
 }
