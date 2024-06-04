@@ -43,20 +43,25 @@ tasks.named<Test>("test") {
 }
 //TODO
 abstract class WriteLog : DefaultTask() {
+    @get:Input
+    abstract val fileText: Property<String>
+    @get:Input
+    val fileName = "InfoLog.txt"
+    @OutputFiles
+    val myFile :File = File(fileName);
     @TaskAction
     fun action() {
-        val file = File("InfoLog.txt")
-        file.createNewFile()
-        
-        file.writeText("HELLO FROM MY TASK")
+       myFile.createNewFile()
+       myFile.writeText(fileText.get())
     }
 }
 
 tasks.register<WriteLog>("createFileTask") {
- 
     group = "information"
-    
-    
+    fileText.convention("this is a new beginning")
+}
+tasks.named<WriteLog>("createFileTask") {
+    fileText.set("can it be overwrite?")
 }
 
 tasks.register<JavaExec>("runInfo") {
@@ -66,4 +71,3 @@ tasks.register<JavaExec>("runInfo") {
     mainClass.set("ttest.Main")
     args("400","4000","10")
 }
-
