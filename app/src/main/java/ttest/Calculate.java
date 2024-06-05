@@ -10,9 +10,9 @@ public class Calculate {
         this.lever = lever;
     }
     int day =0;
-    int lever = 1;
-    double initial_funding = 0;
-    double target_funding = 0;
+    int lever;
+    double initial_funding;
+    double target_funding;
     double final_funding = 0;
     final double fee = 0.00018;
     final double max_loss_per = 0.02;
@@ -28,21 +28,21 @@ public class Calculate {
             System.out.println("target should be bigger than initial_founding");
             return null;
         }
-
-        double profitOfDay = 0;
-        double feeOfDay = 0;
+        double owned = initial_funding;
+        double profitOfDay;
+        double feeOfDay;
         double totalFee = 0;
         double totalProfit = 0;
-        for (int d = 1; initial_funding < target_funding; d++) {
+        for (int d = 1; owned < target_funding; d++) {
             profitOfDay = lever * ((d % 7 == 0 || d % 6 == 0) ?
-                    initial_funding * profit_margin_for_weekend :
-                    initial_funding * profit_margin_for_weekday);
-            feeOfDay = initial_funding * lever * fee;
-            initial_funding += (int) (profitOfDay - feeOfDay);
+                    owned * profit_margin_for_weekend :
+                    owned * profit_margin_for_weekday);
+            feeOfDay = owned * lever * fee;
+            owned += (int) (profitOfDay - feeOfDay);
             day = d;
-            final_funding = initial_funding;
+            final_funding = owned;
             totalFee += feeOfDay;
-            totalProfit += profitOfDay - feeOfDay;
+            totalProfit += (profitOfDay - feeOfDay);
            System.out.println("Day:" + day + "   profit -> " + String.format("%.2f", profitOfDay)
                    + "   fee:   " + String.format("%.2f", feeOfDay)
                    + "   All: " + final_funding);
@@ -58,7 +58,9 @@ public class Calculate {
      * */
     public double getTotalProfit() {
         List<Double> info = calculateInfo();
-        return info.get(1);
+        double total_profit;
+        total_profit = info.get(1) - initial_funding;
+        return total_profit;
     }
 
     /**
@@ -76,14 +78,14 @@ public class Calculate {
         return info.get(0);
     }
     /**
-     * given a specific last position that can be calculated
+     * given a specific target that can be calculated
      * how many days loss it from initial funding
      * */
-    public int MaxLoss(int lastPosition) {
+    public int MaxLoss(int target) {
         int day = 1;
-        double position = initial_funding;
-        while (position > lastPosition) {
-            position -= (position * max_loss_per * lever);
+        double owned = initial_funding;
+        while (owned > target) {
+            owned -= (owned * max_loss_per * lever);
             day ++;
         }
        return day;

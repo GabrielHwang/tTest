@@ -27,7 +27,7 @@ public class CalculateTest {
     public void getTotalProfit(){
         Calculate calculate =new Calculate(400,4000,10);
         double totalFee = calculate.getTotalProfit();
-        assertEquals(4394.5276, totalFee);
+        assertEquals(3994.5276000000003, totalFee);
     }
     @Test
     public void MaxLossTest() {
