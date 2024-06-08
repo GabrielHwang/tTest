@@ -1,0 +1,6 @@
+language: java
+install: skip
+os: windows
+jdk: openjdk21
+script:
+  - ./gradlew build
