@@ -125,4 +125,19 @@ public class Calculate {
         final_funding = profit_box + initial_funding;
         return pure_day;
     }
+    public int pnLDay(int ratio,int times){
+        double profit;
+        double max_loss = initial_funding * 0.02;
+        int days = 0;
+        double owned = initial_funding;
+        for (int d = 1; owned < target_funding; d++) {
+            if (owned % initial_funding == 0) {
+                max_loss = owned * 0.02;
+            }
+            profit  = max_loss * ratio * times;
+            owned += profit;
+            days = d;
+        }
+        return days;
+    }
 }

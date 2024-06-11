@@ -49,4 +49,10 @@ public class CalculateTest {
         double days = calculate.getDays();
         assertEquals(38.0,days);
     }
+    @Test
+    public void pnLDayTest() {
+        Calculate calculate = new Calculate(400, 4000, 5);
+        int i = calculate.pnLDay(2, 2);
+        System.out.println(i);
+    }
 }
