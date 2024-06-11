@@ -9,7 +9,11 @@ public class Calculate {
         this.target_funding = target_funding;
         this.lever = lever;
     }
-    int day =0;
+    Calculate(int target_funding,int lever){
+        this.target_funding = target_funding;
+        this.lever = lever;
+    }
+    int day = 0;
     int lever;
     double initial_funding;
     double target_funding;
@@ -26,6 +30,11 @@ public class Calculate {
         ArrayList<Double> result = new ArrayList<>();
         if (initial_funding > target_funding) {
             System.out.println("target should be bigger than initial_founding");
+            return null;
+        }
+        //TODO exception
+        if (initial_funding < 200) {
+            System.out.println("you need more than 200 to trading");
             return null;
         }
         double owned = initial_funding;
@@ -82,6 +91,10 @@ public class Calculate {
      * how many days loss it from initial funding
      * */
     public int MaxLoss(int target) {
+        if (target < 200) {
+            System.out.println("you need more than 200 to trading");
+            return -1;
+        }
         int day = 1;
         double owned = initial_funding;
         while (owned > target) {
@@ -89,5 +102,27 @@ public class Calculate {
             day ++;
         }
        return day;
+    }
+    public int pure() {
+        double profit_box = 0;
+        double owned = initial_funding;
+        double profitOfDay;
+        double feeOfDay;
+        int pure_day = 0;
+        for (int d = 1; owned < target_funding; d++) {
+            profitOfDay = lever * ((d % 7 == 0 || d % 6 == 0) ?
+                    owned * profit_margin_for_weekend :
+                    owned * profit_margin_for_weekday);
+            feeOfDay = owned * lever * fee;
+            profit_box += (int) (profitOfDay - feeOfDay);
+            owned = profit_box;
+            pure_day = d;
+            System.out.println(" day:  "+ d +"   profit-> "
+                    + String.format("%.2f", profitOfDay)
+                    + "   owned:   " + owned
+                    + "  box: "+ profit_box);
+        }
+        final_funding = profit_box + initial_funding;
+        return pure_day;
     }
 }

@@ -32,7 +32,21 @@ public class CalculateTest {
     @Test
     public void MaxLossTest() {
         Calculate calculate = new Calculate(400, 4000, 10);
-        int days = calculate.MaxLoss(10);
-        assertEquals(18,days);
+        int days = calculate.MaxLoss(200);
+        int days_2  = calculate.MaxLoss(100);
+        assertEquals(-1,days_2);
+        assertEquals(5,days);
+    }
+    @Test
+    public void pureTest() {
+        Calculate calculate = new Calculate(4000, 40000, 5);
+        int pure = calculate.pure();
+        assertEquals(90,pure);
+    }
+    @Test
+    public void getDaysTest(){
+        Calculate calculate = new Calculate(4000, 40000, 5);
+        double days = calculate.getDays();
+        assertEquals(38.0,days);
     }
 }
